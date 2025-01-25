@@ -1,0 +1,13 @@
+- name: Creating a File in HostMachine1
+  hosts: HostMachine1
+  tasks:
+    - name: Creating a First file in Host Machine1
+      file:
+        path: /tmp/temp1.txt
+        mode: '0777'
+        state: touch
+    - name: Creating a Second file in Host Machine1
+      file:
+        path: /tmp/temp2.txt
+        mode: '1777'
+        state: touch

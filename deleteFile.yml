@@ -1,0 +1,12 @@
+---
+- name: Delete a file
+  hosts: HostMachine1
+  tasks:
+    - name: Deleting a File from HostMachine1
+      file:
+        path: /tmp/temp1.txt
+        state: absent
+    - name: Recursively delete file from tmp dir HostMachine1
+      shell: rm -rf /tmp/*
+      become: yes
+...

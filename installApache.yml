@@ -1,0 +1,29 @@
+---
+- name: Install Apache HTTP Server and Run it on port 80
+  hosts: HostMachine2
+  tasks:
+    - name: Update the apt cache
+      apt:
+        update_cache: yes
+    
+    - name: Install Apache HTTP Server
+      apt:
+        name: apache2
+
+    - name: Start the Apache2 httpd service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+- name: Setup the nginx proxy for HostMachine2 on Nginx server container name reverse-rpoxy
+  hosts: reverse-proxy
+  tasks:
+    - name: Modify configuration in /etc/nginx/conf.d/default.conf
+      replace:
+        path: /etc/nginx/conf.d/default.conf
+        regexp: 'proxy_pass http://HostMachine1:80;'
+        replace: "proxy_pass http://HostMachine2:80; # Replace with your Apache container's internal IP and port"
+
+    - name: Reload the nginx server to load the changes
+      command: nginx -s reload

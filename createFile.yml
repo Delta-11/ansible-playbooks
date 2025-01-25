@@ -1,0 +1,10 @@
+---
+- name: Create a File in Host Machine
+  hosts: all
+  tasks: 
+    - name: Create a File
+      file: 
+        path: /tmp/myfile1.txt 
+        state: touch
+        mode: '0644'
+...
