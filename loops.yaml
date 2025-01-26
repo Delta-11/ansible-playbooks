@@ -1,0 +1,22 @@
+---
+- name: First code for Loop
+  hosts: HostMachine1, HostMachine2
+  tasks: 
+    - name: Install Git in both the machine
+      apt: 
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Install tree in both the machine
+      apt:
+        name: tree
+        state: present
+        update_cache: yes
+
+    - name: Install curl in both the machine
+      apt:
+        name: curl
+        state: present
+        update_cache: yes
+...

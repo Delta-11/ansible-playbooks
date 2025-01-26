@@ -1,0 +1,15 @@
+---
+- name: Create users on Host machines
+  hosts: HostMachine1, HostMachine2
+  tasks:
+    - name: Creating a user
+      user:
+       name: "{{ item.name }}"
+       state: present
+       password: "{{ item.password }}"
+       create_home: yes
+       shell: /bin/bash
+      with_items:
+      - { name: 'vivek', password: 'admin' } 
+      - { name: 'john', password: 'admin' }
+...

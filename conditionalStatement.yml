@@ -1,0 +1,19 @@
+- name: Install packages based on the Linux distribution
+  hosts: HostMachine1, HostMachine2
+  tasks:
+    - name: Install packages on Debian
+      yum:
+        name: "{{item.name}}"
+        update: yes
+      when: ansible_distribution == "Debian"
+      with_items:
+        - {name: "git"}
+        - {name: "tree"}
+    - name: Install packages on Ubuntu system
+      apt:
+        name: "{{item.name}}"
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+      with_items:
+        -  {name: "git"}
+        -  {name: "tree"}

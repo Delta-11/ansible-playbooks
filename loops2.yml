@@ -1,0 +1,9 @@
+---
+- name: Installing multiple command using loops
+  hosts: HostMachine1, HostMachine2
+  tasks:
+    - name: Install list of packages
+      apt:
+        name: ["git", "tree", "curl"]
+        state: present
+...
