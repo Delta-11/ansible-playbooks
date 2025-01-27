@@ -1,0 +1,38 @@
+---
+- name: Installing Git if it is not installed
+  hosts: HostMachine1
+  tasks:
+    - name: Checking if git is installed or not
+      shell: git --version
+      register: gitVariable
+      ignore_errors: true
+
+    - name: Printing if git is not installed
+      when: gitVariable is not defined or 'rc' not in gitVariable or gitVariable.rc != 0
+      debug:
+        msg: "Git is not installed"
+
+    - name: Git is already installed
+      when: gitVariable is defined and 'rc' in gitVariable and gitVariable.rc == 0
+      debug: 
+        msg: "Git is already installed with version {{ gitVariable.stdout }}"
+
+    - name: Install Git using APT package manager
+      when: gitVariable is not defined or 'rc' not in gitVariable or gitVariable.rc != 0
+      apt:
+        name: git
+        state: present
+      register: status
+
+    - name: Get Git Version
+      shell: git --version
+      register: gitStatus
+
+    - name: Printing Git is successfully installed
+      when: gitStatus is defined and 'rc' in gitStatus and gitStatus.rc == 0
+      debug:
+        msg: "Git is installed with version {{ gitStatus.stdout }} and installation status is {{ status }}"
+...
+
+# fatal: [HostMachine1]: FAILED! => {"changed": true, "cmd": "git --version", "delta": "0:00:00.001747", "end": "2025-01-27 10:05:20.933545", "msg": "non-zero return code", "rc": 127, "start": "2025-01-27 10:05:20.931798", "stderr": "/bin/sh: 1: git: not found", "stderr_lines": ["/bin/sh: 1: git: not found"], "stdout": "", "stdout_lines": []}
+# rc is return code

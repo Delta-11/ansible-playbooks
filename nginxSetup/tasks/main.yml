@@ -1,0 +1,13 @@
+---
+# Tasks for setting up Nginx as a reverse proxy
+- name: Modify configuration in /etc/nginx/conf.d/default.conf
+  replace:
+    path: /etc/nginx/conf.d/default.conf
+    regexp: 'proxy_pass http://HostMachine1:80;'
+    replace: "proxy_pass http://HostMachine2:80; # Replace with your Apache container's internal IP and port"
+
+- name: Reload the nginx server to load the changes
+  command: nginx -s reload
+
+
+# ansible-galaxy init nginxSetup

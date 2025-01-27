@@ -1,0 +1,11 @@
+---
+- name: "Setting up Apache"
+  hosts: HostMachine2
+  roles:
+    - installApache
+
+- name: "Setting up Nginx"
+  hosts: reverse-proxy
+  roles:
+    - nginxSetup
+...

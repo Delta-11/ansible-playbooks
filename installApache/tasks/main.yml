@@ -1,0 +1,18 @@
+---
+# Tasks for installing Apache
+- name: Update the apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Apache HTTP Server
+  apt:
+    name: apache2
+
+- name: Start the Apache2 httpd service
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+
+# ansible-galaxy init installApache
